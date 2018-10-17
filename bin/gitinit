@@ -24,7 +24,7 @@ ssh_url="git@github.com:stefano-lupo/"$repo_name".git"
 if [ ! -d .git ]; then
   git init
 else
-  git remote origin 
+  git remote remove origin 
 fi
 
 git remote add origin $ssh_url
