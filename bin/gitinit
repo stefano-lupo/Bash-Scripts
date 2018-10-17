@@ -20,6 +20,11 @@ data='{"name":"'$repo_name'"}'
 github "user/repos" "POST" $data
 
 ssh_url="git@github.com:stefano-lupo/"$repo_name".git"
-git init
-git remote remove origin 
+
+if [ ! -d .git ]; then
+  git init
+else
+  git remote origin 
+fi
+
 git remote add origin $ssh_url
