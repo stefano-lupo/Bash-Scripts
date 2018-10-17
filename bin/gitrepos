@@ -1,0 +1,3 @@
+#! /bin/bash
+
+github "user/repos?sort=pushed"

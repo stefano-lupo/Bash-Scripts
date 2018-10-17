@@ -3,28 +3,6 @@
 
 tail_dir=${PWD##*/}
 
-token_location=~/.tokens/github.token
-token=$(cat $token_location)
-
-printf "Using token: %s\n" $token
-
-function githubApi() {
-  echo $1
-  echo $2
-  method="GET"
-  data=""
-
-  if [ "$2" != "" ]; then
-    printf "Setting method to %s\n" $2
-    method=$2
-    data="--data $3"
-  fi
-
-  url="https://api.github.com/"$1
-  printf "%sing: %s\n" $method $url
-  curl -H "Content-Type: application/json; " -H "Authorization: token $token" --request $method $data $url
-}
-
 repo_name=$1
 
 if [ -z $repo_name ]; then
@@ -39,7 +17,7 @@ if [ "$tail_dir" != "$repo_name" ]; then
 fi 
 
 data='{"name":"'$repo_name'"}'
-githubApi "user/repos" "POST" $data
+github "user/repos" "POST" $data
 
 ssh_url="git@github.com:stefano-lupo/"$repo_name".git"
 git init

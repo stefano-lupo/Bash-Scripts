@@ -1,0 +1,24 @@
+#! /bin/bash
+token_location=~/.tokens/github.token
+token=$(cat $token_location)
+# printf "Using token: %s\n" $token
+
+method="GET"
+data=""
+
+if [ "$2" != "" ]; then
+  # printf "Setting method to %s\n" $2
+  method=$2
+  if [ "$method" == "POST" ] || [ "$method" == "PUT" ]; then
+    if [ "$3" == "" ]; then
+      printf "Must provide data argument for %s\n" $method
+      exit
+    fi
+  fi
+  data="--data $3"
+fi
+
+url="https://api.github.com/"$1
+# printf "%sing: %s\n" $method $url
+curl -s -N -H "Content-Type: application/json; " -H "Authorization: token $token" --request $method $data $url | jq '.'
+
