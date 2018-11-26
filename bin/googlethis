@@ -1,0 +1,4 @@
+#!/bin/sh
+
+query=$(zenity --entry --title="Search Google" --text "Enter Query" --entry-text "");
+google-chrome "www.google.com/search?q=$query"

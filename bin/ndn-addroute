@@ -1,0 +1,19 @@
+#! /bin/bash
+
+prefix=$1
+tunnel=$2
+
+if [ -z $prefix ]; then
+  printf "No prefix given\n"
+  exit
+fi
+
+if [ -z $tunnel ]; then
+  printf "No tunnel given\n"
+  exit
+fi
+
+nfdc create $tunnel
+nfdc route add $prefix $tunnel
+nfd-status -r
+ndnping -c 1 $prefix
